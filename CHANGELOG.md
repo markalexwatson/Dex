@@ -24,11 +24,7 @@ All notable changes to Dex will be documented in this file.
 - Removed internal development scripts that shouldn't have been distributed
 - LaunchAgent setup now properly substitutes your vault path
 
-**How to update:** 
-```bash
-git pull origin main
-```
-Then restart Cursor.
+**How to update:** In Cursor, just type `/dex-update` — that's it!
 
 **Thank you** to the community members who reported these issues. Turns out I should test on machines that aren't mine. 😅 Your feedback makes Dex better for everyone.
 
