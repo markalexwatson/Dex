@@ -8,6 +8,58 @@ All notable changes to Dex will be documented in this file.
 
 ## [Unreleased]
 
+### 🔔 Ambient Commitment Detection (ScreenPipe Integration) [BETA]
+
+**What was frustrating:** You say "I'll send that over" in Slack or get asked "Can you review this?" in email. These micro-commitments don't become tasks — they fall through the cracks until someone follows up (awkward) or they're forgotten (worse).
+
+**What's new:** Dex now detects uncommitted asks and promises from your screen activity:
+
+1. **Commitment Detection** — Scans apps like Slack, Email, Teams for commitment patterns
+   - Inbound asks: "Can you review...", "Need your input...", "@you"
+   - Outbound promises: "I'll send...", "Let me follow up...", "Sure, I'll..."
+   - Deadline extraction: "by Friday", "by EOD", "ASAP", "tomorrow"
+
+2. **Smart Matching** — Connects commitments to your existing context
+   - Matches people mentioned to your People pages
+   - Matches topics to your Projects
+   - Matches keywords to your Goals
+
+3. **Review Integration** — Surfaces during your rituals
+   - `/daily-review` shows today's uncommitted items
+   - `/week-review` shows commitment health stats
+   - `/commitment-scan` for standalone scanning anytime
+
+**Example during daily review:**
+```
+🔔 Uncommitted Items Detected
+
+1. Sarah Chen (Slack, 2:34 PM)
+   > "Can you review the pricing proposal by Friday?"
+   📎 Matches: Q1 Pricing Project
+   → [Create task] [Already handled] [Ignore]
+```
+
+**Privacy-first:**
+- Requires ScreenPipe running locally (all data stays on your machine)
+- Sensitive apps excluded by default (1Password, banking, etc.)
+- You decide what becomes a task — nothing auto-created
+
+**Beta activation required:**
+- Run `/beta-activate DEXSCREENPIPE2026` to unlock ScreenPipe features
+- Then asked once during `/daily-plan` or `/daily-review` to enable
+- Must explicitly enable before any screen data is accessed
+- New users can also run `/screenpipe-setup` after beta activation
+
+**New skills:**
+- `/commitment-scan` — Scan for uncommitted items anytime
+- `/screenpipe-setup` — Enable/disable ScreenPipe with privacy configuration
+
+**Why you'll care:** Never forget a promise or miss an ask again. The things you commit to in chat apps now surface in your task system automatically.
+
+**Requirements:** ScreenPipe must be installed and opted-in. See `06-Resources/Dex_System/ScreenPipe_Setup.md` for setup.
+
+---
+
 ### 🤖 AI Model Flexibility: Budget Cloud & Offline Mode
 
 **What was frustrating:** Dex only worked with Claude, which costs money and requires internet. Heavy users faced high API bills, and travelers couldn't use Dex on planes or trains.

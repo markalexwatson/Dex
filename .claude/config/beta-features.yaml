@@ -72,6 +72,32 @@ features:
       enable_analytics_prompt: true
       enable_pendo_tracking: true
 
+  screenpipe:
+    name: "ScreenPipe Integration"
+    description: "Ambient work intelligence - Dex learns what you're working on via screen OCR. Work apps only, all browsers and personal apps blocked. 30-day auto-delete."
+    version: "0.1.0"
+    status: "active"
+
+    # SHA-256 hash of "screenpipe-beta-2026:DEXSCREENPIPE2026"
+    code_hash: "082f043791d749d691491c57f64b10e2c2c81b041306fcbaecdc6becc259355c"
+    code_salt: "screenpipe-beta-2026"
+
+    # Documentation
+    instructions_file: "System/Beta/screenpipe/README.md"
+
+    # What this enables
+    capabilities:
+      - "screenpipe_setup"       # Run /screenpipe-setup
+      - "screenpipe_query"       # Query screen history
+      - "screenpipe_time_audit"  # Time audit in daily review
+
+    min_dex_version: "1.3.0"
+
+    feature_flags:
+      enable_screenpipe_skill: true
+      enable_screen_recall: true
+      enable_time_audit: true
+
 # Template for adding new beta features:
 #
 #   feature_key:

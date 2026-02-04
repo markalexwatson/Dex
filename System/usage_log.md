@@ -118,6 +118,33 @@ Tracks whether user has been asked about anonymous feature usage tracking.
 
 ---
 
+## ScreenPipe Consent
+
+Tracks whether user has been asked about ScreenPipe ambient intelligence.
+
+- **Consent asked:** false
+- **Consent decision:** pending
+- **Consent date:** (not yet decided)
+
+**Values:**
+- `Consent decision: pending` → Not yet asked
+- `Consent decision: opted-in` → User wants ScreenPipe features
+- `Consent decision: opted-out` → User declined ScreenPipe
+
+**What ScreenPipe enables (when opted in):**
+- `/commitment-scan` - Detect uncommitted asks/promises from Slack, Email, etc.
+- Daily review commitment check - Surface items during `/daily-review`
+- Time audit - Breakdown of time by app
+- Screen recall - "What was I doing at 2pm?"
+
+**Privacy:**
+- All data stored locally (never sent anywhere)
+- Work apps only (browsers, banking, social blocked by default)
+- Auto-deletes after 30 days
+- User can disable anytime
+
+---
+
 ## Journey Metadata
 
 Auto-calculated metrics (if analytics opted in). Updated when features are used.

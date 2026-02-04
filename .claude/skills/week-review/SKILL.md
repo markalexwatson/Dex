@@ -134,6 +134,40 @@ Review meeting notes from the week:
 - Action items created
 - Follow-ups that might have slipped
 
+### 5.5 Commitment Health Analysis (NEW)
+
+If ScreenPipe and Commitment Detection are available, show aggregate stats:
+
+```
+Use: get_commitment_stats(
+    start_date="YYYY-MM-DD",  # Monday of this week
+    end_date="YYYY-MM-DD"     # Today
+)
+```
+
+**Surface to user:**
+
+> "📊 **Commitment Health This Week**
+>
+> **Detected across apps:** 12 potential commitments
+> **Already had tasks:** 7 (58%)
+> **Created from prompts:** 3
+> **Dismissed as handled:** 2
+>
+> **Apps with most uncaptured asks:**
+> 1. Slack - 5 items
+> 2. Email - 4 items
+> 3. Notion - 3 items
+>
+> **People who asked most of you:**
+> 1. Sarah Chen - 4 asks
+> 2. Product team - 3 asks
+>
+> 💡 *Consider: Check Slack more frequently for asks, or run `/commitment-scan` mid-week*"
+
+**If no commitment data:**
+Skip this section silently (user may not have ScreenPipe or commitment detection enabled).
+
 ### 6. Learning Compilation & Pattern Detection
 
 Review `System/Session_Learnings/` files from this week:
@@ -323,19 +357,6 @@ After synthesis:
 2. Archive completed items
 3. Update project pages with status changes
 4. Offer to run `/week-plan` for next week
-
----
-
-## Track Usage (Silent)
-
-Update `System/usage_log.md` to mark weekly review as used.
-
-**Analytics (Beta Feature):**
-1. Call `check_beta_enabled(feature="analytics")` - if false, skip
-2. If beta enabled AND consent given, fire event:
-- Fire event: `week_review_completed`
-- Properties: `themes_identified`, `completion_rate`
-- Only fires if BOTH: analytics beta activated AND opted in
 
 ---
 
