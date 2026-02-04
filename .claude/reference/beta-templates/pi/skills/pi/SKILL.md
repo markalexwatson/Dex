@@ -146,9 +146,9 @@ Run a Dex skill through Pi with full context.
 
    ## Context
 
-   - **Vault Path:** /Users/dave/Claudesidian
-   - **Date:** Monday, February 3, 2026
-   - **User:** Dave Killeen
+   - **Vault Path:** [vault path from pwd or user-profile.yaml]
+   - **Date:** [current date]
+   - **User:** [from user-profile.yaml]
    - **Pillars:** [list from pillars.yaml]
 
    ## Skill Instructions
@@ -209,8 +209,8 @@ Run a custom task (not a skill) through Pi.
 
    ## Context
 
-   - **Vault Path:** /Users/dave/Claudesidian
-   - **Date:** Monday, February 3, 2026
+   - **Vault Path:** [vault path from pwd or user-profile.yaml]
+   - **Date:** [current date]
 
    Execute this task. You have access to the vault.
    ```

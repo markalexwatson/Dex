@@ -8,6 +8,32 @@ All notable changes to Dex will be documented in this file.
 
 ## [Unreleased]
 
+### 🐛 Bug Fix: Hardcoded Paths (Thank You Community!)
+
+**What was broken:** Several scripts and features contained paths hardcoded to my machine (`/Users/dave/...`). 🙈 
+
+**What this affected:**
+- `/dex-obsidian-setup` — Obsidian integration wouldn't work
+- Background automation scripts (changelog checker, learning review) — wouldn't run
+- Two internal scripts (`migrate-commands-to-skills.sh`, `fix-duplicate-frontmatter.sh`) — confusingly visible in repo
+
+**Core functionality was fine:** Your daily workflows (`/daily-plan`, `/review`, task management, meeting processing) all worked normally. This bug only affected specific features.
+
+**What's fixed:** 
+- All paths now use dynamic resolution — they work on any machine, any folder name
+- Removed internal development scripts that shouldn't have been distributed
+- LaunchAgent setup now properly substitutes your vault path
+
+**How to update:** 
+```bash
+git pull origin main
+```
+Then restart Cursor.
+
+**Thank you** to the community members who reported these issues. Turns out I should test on machines that aren't mine. 😅 Your feedback makes Dex better for everyone.
+
+---
+
 ### 🔬 X-Ray Vision: Learn AI by Seeing What Just Happened
 
 **What was frustrating:** Dex felt like a black box. You knew it was helping, but you had no idea what was actually happening — which tools were firing, how context was loaded, or how you could customize the system. Learning AI concepts felt abstract and disconnected from your actual experience.
