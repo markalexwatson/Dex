@@ -33,8 +33,13 @@ from mcp.server.models import InitializationOptions
 import mcp.server.stdio
 import mcp.types as types
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Set up logging first (before any imports that might use it)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Add grandparent directory to path for 'core.utils' imports
+# The script is at core/mcp/work_server.py, so we need to add the vault root
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 # Import reference formatter for Obsidian wiki link support
 try:
@@ -50,10 +55,6 @@ try:
 except ImportError:
     logger.warning("Reference formatter not available - wiki links disabled")
     HAS_REFERENCE_FORMATTER = False
-
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # Custom JSON encoder for handling date/datetime objects
 class DateTimeEncoder(json.JSONEncoder):
