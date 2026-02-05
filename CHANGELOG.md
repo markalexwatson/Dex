@@ -21,9 +21,14 @@ All notable changes to Dex will be documented in this file.
 - **Performance:** 30 seconds → under 1 second (30x faster!)
 - **Accuracy:** No more ghost events from the past
 
-**Technical:** Created `calendar_eventkit.py` using PyObjC bindings for EventKit. Updated `calendar_server.py` to use EventKit for all date-range queries. Added `pyobjc-framework-EventKit` to install script dependencies.
+**One-time setup:** After updating, run `/calendar-setup` to grant Python access to Calendar. This is a macOS permission that unlocks fast queries. If you skip this, calendar queries will still work (using AppleScript fallback) but will be slower.
 
-**How to update:** In Cursor, type `/dex-update` — that's it!
+**Technical:** Created `calendar_eventkit.py` using PyObjC bindings for EventKit. Updated `calendar_server.py` to use EventKit for all calendar operations (list, search, get_events, next_event, attendees). Added `pyobjc-framework-EventKit` to install script dependencies. Created `/calendar-setup` skill to guide permission granting.
+
+**How to update:** 
+1. In Cursor, type `/dex-update`
+2. Run `/calendar-setup` to enable fast queries
+3. Done!
 
 ---
 
