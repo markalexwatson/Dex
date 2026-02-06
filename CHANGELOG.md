@@ -8,262 +8,118 @@ All notable changes to Dex will be documented in this file.
 
 ## [1.3.0] - 2026-02-05
 
-### 🎯 Smart Pillar Inference for Task Creation
+### 🔬 X-Ray: Understand What's Actually Happening (and Make Dex Your Own)
 
-**What was frustrating:** Every time you asked to create a task ("Remind me to prep for the Acme demo"), Dex would stop and ask: "Which pillar is this for?" This added friction to quick captures and broke your flow.
+From the start, Dex was built to do two things: help you get organised, and help you understand AI. X-Ray delivers on that second promise.
 
-**What's different now:** Dex analyzes your request and infers the most likely pillar based on keywords:
-- "Prep demo for Acme Corp" → **Deal Support** (demo + customer keywords)
-- "Write blog post about AI" → **Thought Leadership** (content keywords)
-- "Review beta feedback" → **Product Feedback** (feedback keywords)
+**How to use it:** Type `/xray` followed by whatever you want to understand. That's it.
 
-Then confirms with a quick one-liner:
-> "Creating under Product Feedback pillar (looks like data gathering). Sound right, or should it be Deal Support / Thought Leadership?"
+- `/xray How does the Career MCP server work?`
+- `/xray How is the daily-plan command working?`
+- `/xray What just happened in this conversation?`
+- `/xray How did Dex know to pull that person page?`
 
-**Why you'll care:** Fast task capture with data quality. No more back-and-forth just to add a reminder. But your tasks still have proper strategic alignment.
+Dex will show you exactly what happened — which files were read and why, which tools fired, how context was loaded — and connect it all to the AI concepts behind it. It generates diagrams, walks you through the building blocks, and ties everything back to your actual vault and your actual actions.
 
-**Customization options:** Want different behavior? You can customize this in your CLAUDE.md:
-- **Less strict:** Remove the pillar requirement entirely and use a default pillar
-- **Triage flow:** Route quick captures to `00-Inbox/Quick_Captures.md`, then sort them during `/triage` (skill you can build yourself or request)
-- **Your own keywords:** Edit `System/pillars.yaml` to add custom keywords for better inference
-
-**Technical:** Updated task creation behavior in `.claude/CLAUDE.md` to include pillar inference logic. The work-mcp validation still requires a pillar (maintains data integrity), but Dex now handles the inference and confirmation before calling the MCP.
-
----
-
-### ⚡ Performance: Calendar Queries 30x Faster (30s → <1s)
-
-**What was frustrating:** Calendar queries took 30 seconds to respond. You'd ask "what meetings do I have?" and wait... and wait... Eventually you'd stop asking.
-
-**What was broken:** The calendar MCP used AppleScript to query Calendar.app. AppleScript's `every event of calendar` loads ALL events (years of history) into memory, then filters client-side. For a work calendar with thousands of events, this was painfully slow. Plus, recurring events returned all historical instances, causing ghost events from weeks ago to appear in today's results.
-
-**What's fixed:** 
-- Replaced AppleScript with **native EventKit** (Apple's calendar framework)
-- EventKit uses proper database queries, not linear scans
-- Returns only events in the exact date range requested
-- **Performance:** 30 seconds → under 1 second (30x faster!)
-- **Accuracy:** No more ghost events from the past
-
-**One-time setup:** After updating, run `/calendar-setup` to grant Python access to Calendar. This is a macOS permission that unlocks fast queries. If you skip this, calendar queries will still work (using AppleScript fallback) but will be slower.
-
-**Technical:** Created `calendar_eventkit.py` using PyObjC bindings for EventKit. Updated `calendar_server.py` to use EventKit for all calendar operations (list, search, get_events, next_event, attendees). Added `pyobjc-framework-EventKit` to install script dependencies. Created `/calendar-setup` skill to guide permission granting.
-
-**How to update:** 
-1. In Cursor, type `/dex-update`
-2. Run `/calendar-setup` to enable fast queries
-3. Done!
-
----
-
-### 🐛 Bug Fix: Hardcoded Paths (Thank You Community!)
-
-**What was broken:** Several scripts and features contained paths hardcoded to my machine (`/Users/dave/...`). 🙈 
-
-**What this affected:**
-- `/dex-obsidian-setup` — Obsidian integration wouldn't work
-- Background automation scripts (changelog checker, learning review) — wouldn't run
-- Two internal scripts (`migrate-commands-to-skills.sh`, `fix-duplicate-frontmatter.sh`) — confusingly visible in repo
-
-**Core functionality was fine:** Your daily workflows (`/daily-plan`, `/review`, task management, meeting processing) all worked normally. This bug only affected specific features.
-
-**What's fixed:** 
-- All paths now use dynamic resolution — they work on any machine, any folder name
-- Removed internal development scripts that shouldn't have been distributed
-- LaunchAgent setup now properly substitutes your vault path
-
-**How to update:** In Cursor, just type `/dex-update` — that's it!
-
-**Thank you** to the community members who reported these issues. Turns out I should test on machines that aren't mine. 😅 Your feedback makes Dex better for everyone.
-
----
-
-### 🔬 X-Ray Vision: Learn AI by Seeing What Just Happened
-
-**What was frustrating:** Dex felt like a black box. You knew it was helping, but you had no idea what was actually happening — which tools were firing, how context was loaded, or how you could customize the system. Learning AI concepts felt abstract and disconnected from your actual experience.
-
-**What's new:** Run `/xray` anytime to understand what just happened in your conversation.
-
-**Default mode (just `/xray`):** Shows the work from THIS conversation:
-- What files were read and why
-- What tools/MCPs were used
-- What context was loaded at session start (and how)
-- How each action connects to underlying AI concepts
-
-**Deep-dive modes:**
+**Deep-dive modes** (type these exactly as shown):
 - `/xray ai` — First principles: context windows, tokens, statelessness, tools
-- `/xray dex` — The architecture: CLAUDE.md, hooks, MCPs, skills, vault structure
-- `/xray boot` — The session startup sequence in detail
-- `/xray today` — ScreenPipe-powered analysis of your day
-- `/xray extend` — How to customize: edit CLAUDE.md, create skills, write hooks, build MCPs
+- `/xray dex` — The full architecture: CLAUDE.md, hooks, MCPs, skills, vault structure
+- `/xray boot` — How a Dex session starts up, step by step
+- `/xray extend` — How to customise: edit CLAUDE.md, create skills, write hooks, build MCPs
 
-**The philosophy:** The best way to learn AI is by examining what just happened, not reading abstract explanations. Every `/xray` session connects specific actions (I read this file because...) to general concepts (...CLAUDE.md tells me where files live).
-
-**Where you'll see it:**
-- Run `/xray` after any conversation to see "behind the scenes"
-- Educational concepts are tied to YOUR vault and YOUR actions
-- End with practical customization opportunities
-
-**The goal:** You're not just a user — you're empowered to extend and personalize your AI system because you understand the underlying mechanics.
+**Why this matters:** There are plenty of great courses out there that teach AI proficiency. But I passionately believe the best way to learn AI is to build with it. There's nothing more personal than building your own knowledge system through something like Dex — and being able to see what's actually happening as you go. X-Ray opens the black box. You stop being a passive user and start understanding the mechanics, which means you can extend, customise, and make Dex genuinely yours. That's always been the goal: educate and elevate.
 
 ---
 
-### 🔌 Productivity Stack Integrations (Notion, Slack, Google Workspace)
+### 🔌 Connect Your Productivity Stack (Notion, Slack, Google Workspace)
 
-**What was frustrating:** Your work context is scattered across Notion, Slack, and Gmail. When prepping for meetings, you manually search each tool. When looking up a person, you don't see your communication history with them.
+Your work lives across multiple tools. Now Dex can reach into them, so your meeting prep, person pages, and daily planning pull from everywhere — not just your vault.
 
-**What's new:** Connect your productivity tools to Dex for richer context everywhere:
+1. **Notion** (`/integrate-notion`) — Search your workspace, pull relevant docs into meeting prep, link shared content to person pages. 2 min setup.
 
-1. **Notion Integration** (`/integrate-notion`)
-   - Search your Notion workspace from Dex
-   - Meeting prep pulls relevant Notion docs
-   - Person pages link to shared Notion content
-   - Uses official Notion MCP (`@notionhq/notion-mcp-server`)
+2. **Slack** (`/integrate-slack`) — Ask "What did Sarah say about the Q1 budget?" and get an answer. Meeting prep includes recent Slack context with attendees. Person pages show communication history. 3 min setup.
 
-2. **Slack Integration** (`/integrate-slack`)
-   - "What did Sarah say about the Q1 budget?" → Searches Slack
-   - Meeting prep includes recent Slack context with attendees
-   - Person pages show communication history
-   - Easy cookie auth (no bot setup required) or traditional bot tokens
+3. **Google Workspace** (`/integrate-google`) — Gmail threads surface in person pages. Email context with meeting attendees during prep. 5 min setup.
 
-3. **Google Workspace Integration** (`/integrate-google`)
-   - Gmail thread context in person pages
-   - Email threads with meeting attendees during prep
-   - Calendar event enrichment
-   - One-time OAuth setup (~5 min)
+**Where you'll notice it:**
+- `/meeting-prep` pulls from all enabled integrations automatically
+- Person pages gain an Integration Context section
+- If you already have these MCPs configured, Dex detects them and offers to keep, upgrade, or skip
 
-**Where you'll see it:**
-- `/meeting-prep` — Pulls context from all enabled integrations
-- Person pages — Integration Context section with Slack/Notion/Email history
-- New users — Onboarding Step 9 offers integration setup
-- Existing users — `/dex-update` announces new integrations, detects your existing MCPs
-
-**Smart detection for existing users:**
-If you already have Notion/Slack/Google MCPs configured, Dex detects them and offers to:
-- Keep your existing setup (it works!)
-- Upgrade to Dex recommended packages (better maintained, more features)
-- Skip and configure later
-
-**Setup commands:**
-- `/integrate-notion` — 2 min setup (just needs a token)
-- `/integrate-slack` — 3 min setup (cookie auth or bot token)
-- `/integrate-google` — 5 min setup (OAuth through Google Cloud)
+Each integration has a guided setup command that walks you through it step by step.
 
 ---
 
-### 🔔 Ambient Commitment Detection (ScreenPipe Integration) [BETA]
+### 🤖 AI Model Flexibility: Work Cheaper or Work Offline
 
-**What was frustrating:** You say "I'll send that over" in Slack or get asked "Can you review this?" in email. These micro-commitments don't become tasks — they fall through the cracks until someone follows up (awkward) or they're forgotten (worse).
+Until now, Dex needed Claude and an internet connection. That's no longer the case.
 
-**What's new:** Dex now detects uncommitted asks and promises from your screen activity:
+1. **Budget Cloud Mode** — Use models like Kimi K2.5 or DeepSeek for routine tasks. Save 80-97% on API costs. Quality is solid for daily planning, summaries, and task management.
 
-1. **Commitment Detection** — Scans apps like Slack, Email, Teams for commitment patterns
-   - Inbound asks: "Can you review...", "Need your input...", "@you"
-   - Outbound promises: "I'll send...", "Let me follow up...", "Sure, I'll..."
-   - Deadline extraction: "by Friday", "by EOD", "ASAP", "tomorrow"
+2. **Offline Mode** — Download an open-source AI model to your machine. Works on planes, trains, cafés with terrible wifi. Completely free, runs locally.
 
-2. **Smart Matching** — Connects commitments to your existing context
-   - Matches people mentioned to your People pages
-   - Matches topics to your Projects
-   - Matches keywords to your Goals
+3. **Smart Routing** — Let Dex pick the right model automatically. Claude for complex work, budget models for everyday tasks, local model when you're offline.
 
-3. **Review Integration** — Surfaces during your rituals
-   - `/daily-review` shows today's uncommitted items
-   - `/week-review` shows commitment health stats
-   - `/commitment-scan` for standalone scanning anytime
-
-**Example during daily review:**
-```
-🔔 Uncommitted Items Detected
-
-1. Sarah Chen (Slack, 2:34 PM)
-   > "Can you review the pricing proposal by Friday?"
-   📎 Matches: Q1 Pricing Project
-   → [Create task] [Already handled] [Ignore]
-```
-
-**Privacy-first:**
-- Requires ScreenPipe running locally (all data stays on your machine)
-- Sensitive apps excluded by default (1Password, banking, etc.)
-- You decide what becomes a task — nothing auto-created
-
-**Beta activation required:**
-- Run `/beta-activate DEXSCREENPIPE2026` to unlock ScreenPipe features
-- Then asked once during `/daily-plan` or `/daily-review` to enable
-- Must explicitly enable before any screen data is accessed
-- New users can also run `/screenpipe-setup` after beta activation
-
-**New skills:**
-- `/commitment-scan` — Scan for uncommitted items anytime
-- `/screenpipe-setup` — Enable/disable ScreenPipe with privacy configuration
-
-**Why you'll care:** Never forget a promise or miss an ask again. The things you commit to in chat apps now surface in your task system automatically.
-
-**Requirements:** ScreenPipe must be installed and opted-in. See `06-Resources/Dex_System/ScreenPipe_Setup.md` for setup.
+**New commands:**
+- `/ai-setup` — Guided setup that handles the technical bits for you
+- `/ai-status` — Check what's configured and how much credit you have left
 
 ---
 
-### 🤖 AI Model Flexibility: Budget Cloud & Offline Mode
+### 📊 Help Improve Dex (Optional Analytics)
 
-**What was frustrating:** Dex only worked with Claude, which costs money and requires internet. Heavy users faced high API bills, and travelers couldn't use Dex on planes or trains.
+I'd genuinely appreciate your help making Dex better. This release adds optional, privacy-first analytics — it tells me which features you use, not what you do with them.
 
-**What's new:** Two new ways to use Dex:
+**What gets shared (if you opt in):**
+- Which built-in features you use (e.g., "ran /daily-plan")
+- That's it. No content, no names, no notes, no conversations. Ever.
 
-1. **Budget Cloud Mode** — Use cheaper AI models like Kimi K2.5 or DeepSeek when online
-   - Save 80-97% on API costs for routine tasks
-   - Requires ~$5-10 upfront via OpenRouter
-   - Quality is great for daily tasks (summaries, planning, task management)
-
-2. **Offline Mode** — Download an AI to run locally on your computer
-   - Works on planes, trains, anywhere without internet
-   - Completely free forever
-   - Requires 8GB+ RAM (16GB+ recommended)
-
-3. **Smart Routing** — Let Dex automatically pick the best model
-   - Claude for complex tasks
-   - Budget models for simple tasks
-   - Local model when offline
-
-**New skills:**
-- `/ai-setup` — Guided setup for budget cloud and offline mode
-- `/ai-status` — Check your AI configuration and credits
-
-**Why you'll care:** Reduce your AI costs by 80%+ for everyday tasks, or work completely offline during travel — your choice.
-
-**User-friendly:** The setup is fully guided with plain-language explanations. Dex handles the technical parts (starting services, downloading models) automatically.
-
----
-
-### 📊 Help Dave Improve Dex (Optional Analytics)
-
-**What's this about?**
-
-Dave could use your help making Dex better. This release adds optional, privacy-first analytics that lets you share which Dex features you use — not what you do with them, just that you used them.
-
-**What gets tracked (if you opt in):**
-- Which Dex built-in features you use (e.g., "ran /daily-plan")
-- Nothing about what you DO with features
-- No content, names, notes, or conversations — ever
-
-**What's NOT tracked:**
+**What's never shared:**
 - Custom skills or MCPs you create
-- Any content you write or manage
+- Anything you write or manage
 - Who you meet with or what you discuss
 
-**The ask:**
+Dex will ask you once — during onboarding or your next planning session:
 
-During onboarding (new users) or your next planning session (existing users), Dex will ask once:
+> "Help improve Dex? [Yes, happy to help] / [No thanks]"
 
-> "Dave could use your help improving Dex. Help improve Dex? [Yes, happy to help] / [No thanks]"
+Say yes and you help me see what's working. Say no and nothing changes. Either way, thank you for using Dex.
 
-Say yes, and you help Dave understand which features work and which need improvement. Say no, and nothing changes — Dex works exactly the same.
+---
 
-**Technical:**
-- Added `analytics_helper.py` in `core/mcp/`
-- Consent tracked in `System/usage_log.md`
-- Events only fire if `analytics.enabled: true` in user-profile.yaml
-- 20+ skills now have analytics hooks
+### ⚡ Calendar Queries: 30x Faster
 
-**Beta only:** This feature is currently in beta testing.
+Calendar queries used to take 30 seconds. Now they take under a second.
+
+**What was wrong:** The old approach loaded your entire calendar history into memory, then filtered. For a busy work calendar, that meant thousands of events churning through every time you asked "what's on today?" — plus ghost events from weeks ago leaking into results.
+
+**What's fixed:** Dex now uses Apple's native EventKit framework, which queries the calendar database directly. Only the events you asked for come back, instantly.
+
+**One-time setup:** Run `/calendar-setup` after updating to grant the permission. Skip it and calendar still works (just slower, using the old method).
+
+---
+
+### 🎯 Smart Pillar Inference for Tasks
+
+Creating a task used to mean a back-and-forth: you'd say "Remind me to prep for the Acme demo" and Dex would ask which pillar it belongs to. Now Dex figures it out:
+
+- "Prep demo for Acme Corp" → **Deal Support**
+- "Write blog post about AI" → **Thought Leadership**
+- "Review beta feedback" → **Product Feedback**
+
+It confirms with a quick one-liner and you move on. If it guesses wrong, just tell it — easy override.
+
+**Customisation:** Edit `System/pillars.yaml` to add your own keywords for better inference, or adjust the behaviour in your CLAUDE.md.
+
+---
+
+### 🐛 Bug Fix: Hardcoded Paths
+
+Several scripts contained paths hardcoded to my machine. Your core workflows (`/daily-plan`, `/review`, task management, meeting processing) were unaffected, but `/dex-obsidian-setup` and background automation scripts wouldn't work on other setups.
+
+**Fixed:** All paths now resolve dynamically. Internal development scripts that shouldn't have been distributed have been removed.
+
+Thank you to the community members who reported these. Your feedback makes Dex better for everyone.
 
 ---
 
