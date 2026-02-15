@@ -8,45 +8,7 @@ All notable changes to Dex will be documented in this file.
 
 ## [Unreleased]
 
-### 🐛 Fixed: TUI Width Crashes Across All Interactive UI
-
-**What was broken:** Pi would crash with "Rendered line exceeds terminal width" during various operations:
-- Smart work orchestration with parallel scouts
-- Daily planning wizard
-- Daily review wizard  
-- Task boards, career gauges, week progress panels
-
-**Root cause:** Two types of border width bugs:
-
-1. **Off-by-one error** (4 UI components):
-   ```typescript
-   // ❌ Wrong: width - titleWidth - 4 (missing 1 char)
-   // ✅ Correct: width - titleWidth - 5
-   ```
-
-2. **Hardcoded assumptions** (2 wizards):
-   ```typescript
-   // ❌ Wrong: Assumes "Daily Plan Wizard" is always 17 visible chars
-   "┌─ " + title + " " + "─".repeat(width - 22) + "┐"
-   // ✅ Correct: Calculate actual visible width
-   const titleWidth = getVisibleWidth(title);
-   const fill = calculateBorderFill(width, titleWidth);
-   ```
-
-**What's fixed:**
-- ✅ **8 components fixed:** 4 UI components + 2 wizards (both top & bottom borders)
-- ✅ **Reusable utilities:** Created `ui/tui-validation.ts` with width calculation helpers
-- ✅ **Defensive logging:** All border rendering now validates and logs violations to `~/.pi/agent/tui-width-errors.log`
-- ✅ **Unit tests:** 20+ test cases covering edge cases, ANSI codes, narrow terminals
-- ✅ **Documentation:** Comprehensive prevention guide in `System/PRDs/tui-width-bug-fix.md`
-
-**Why you'll care:** No more mysterious Pi crashes in interactive features. Daily planning, reviews, smart work orchestration, and all custom UI panels are now stable across different terminal widths.
-
-**For developers:** If you're building custom TUI components:
-1. Import helpers from `ui/tui-validation.ts`
-2. Use `calculateBorderFill()` and `getVisibleWidth()` instead of hardcoded math
-3. Call `validateLineWidth()` on all rendered lines
-4. See prevention checklist and examples in `System/PRDs/tui-width-bug-fix.md`
+*Nothing yet - changes appear here until the next push to GitHub.*
 
 ---
 
