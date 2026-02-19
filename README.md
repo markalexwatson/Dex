@@ -879,6 +879,14 @@ Thanks to [Noah Brier](https://github.com/heyitsnoah/claudesidian) for the Claud
 
 ---
 
+## Contributing
+
+Made an improvement to your Dex setup? Fixed something that was bugging you? Built a skill that others could use? We'd love to see it.
+
+**You don't need to be a developer.** Just tell Claude "I want to share my changes with the Dex community" and it'll walk you through the process. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+
+---
+
 ## License
 
 MIT

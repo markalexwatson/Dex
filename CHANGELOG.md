@@ -36,6 +36,18 @@ The short version: Dex remembers things now. It gets smarter each day you use it
 
 ---
 
+### 🙏 Community
+
+This is the first time Dex has received contributions from the community, and I'm genuinely humbled. Three people independently found things to improve, wrote the code, and shared it back.
+
+- **@fonto** — Fixed the calendar setup skill so `/calendar-setup` actually works, and caught a bug where task IDs could collide across days. Two solid fixes that make Dex more reliable for everyone.
+- **@acottrell** — Wrote a clear, non-technical guide for connecting Google Calendar on Mac. Filled a gap I hadn't even documented yet. (And thank you for the kind words.)
+- **@mekuhl** — Built an Apple Reminders integration that lets you capture tasks via Siri on your phone and have them flow into Dex. Currently under review — coming in a future release.
+
+If you've made improvements to your Dex setup that could help others, we'd love to see them. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to share — no technical background required.
+
+---
+
 ## [1.10.0] - 2026-02-17
 
 ### 🩺 Dex Now Tells You When Something's Wrong
