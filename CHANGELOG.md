@@ -29,7 +29,7 @@ Dex now keeps a lightweight directory of everyone you know. Instead of scanning 
 
 This is a big one. Dex now connects to 8 tools where your real work happens — and it goes both ways. Complete a task in Dex and it's done in Todoist. Get an email flagged in your morning plan because someone hasn't replied in 3 days. See your Jira sprint status right next to your weekly priorities.
 
-Some of you have already been building your own MCP integrations using `/create-mcp` and `/integrate-mcp` — and honestly, that's impressive. But we kept hearing the same thing: "I just want to get up and running without figuring out the plumbing." So we built it in.
+Some of you have already been building your own MCP integrations using `/create-mcp` and `/integrate-mcp` — and honestly, that's impressive. But Dave kept hearing the same thing: "I just want to get up and running without figuring out the plumbing." So it's built in now.
 
 ---
 
@@ -116,7 +116,7 @@ Five connected builds that make Dex feel like it actually knows you — not just
 
 ### 🧠 Dex Got a Brain Upgrade
 
-This is the biggest single release since semantic search. I spent some time catching up on the full Claude Code release log from the last two months — persistent memory, isolated skill contexts, smarter tool discovery, faster responses — and went through everything with Dex to make sure we're bringing it all in where it's relevant.
+This is the biggest single release since semantic search. I spent some time catching up on the full Claude Code release log from the last two months — persistent memory, isolated skill contexts, smarter tool discovery, faster responses — and went through everything with Dex to make sure it's all brought in where it's relevant.
 
 The short version: Dex remembers things now. It gets smarter each day you use it. Sessions stay fast all day. And your skills take care of their own housekeeping instead of leaving it to you.
 
@@ -133,7 +133,7 @@ The short version: Dex remembers things now. It gets smarter each day you use it
 
 **Smarter infrastructure under the hood.** MCP tool descriptions now load on-demand instead of all at once — sessions with 12+ background services start faster and use less memory. OAuth for MCP integrations like Slack comes pre-configured, making future integrations simpler to set up. Quick operations like `/triage` and inbox processing are tuned for speed over deep reasoning — routing decisions that used to take 8 seconds now feel instant.
 
-**Memory ownership, clarified.** With multiple memory layers now active, we've documented exactly what owns what. Claude's built-in memory handles your preferences and communication style — formatting choices, how you like summaries structured, your tone preferences. Dex's memory handles your work — who said what in which meeting, what you committed to, which deals need attention. They stack, not compete. See the new Memory Ownership guide in your Dex System docs.
+**Memory ownership, clarified.** With multiple memory layers now active, Dave has documented exactly what owns what. Claude's built-in memory handles your preferences and communication style — formatting choices, how you like summaries structured, your tone preferences. Dex's memory handles your work — who said what in which meeting, what you committed to, which deals need attention. They stack, not compete. See the new Memory Ownership guide in your Dex System docs.
 
 **New guides:** Named Sessions (resume project conversations with full history), Background Processing (which skills support it and how), and Memory Ownership (how Dex's four memory layers work together).
 
@@ -232,7 +232,7 @@ This is powered by [QMD](https://github.com/tobi/qmd), an open-source local sear
 
 - **Planning & Reviews** — `/daily-plan`, `/week-plan`, `/daily-review`, `/week-review`, and `/quarter-review` all become meaning-aware. Your morning plan surfaces notes related to today's meetings by theme ("onboarding" pulls in "activation rates"). Your weekly review detects which tasks contributed to which goals — even when they weren't explicitly linked. Stale goals get flagged with hidden activity you didn't know about.
 
-- **Meeting Intelligence** — `/meeting-prep` finds past discussions related to the meeting topic, not just meetings with the same people. `/process-meetings` catches implicit commitments like "we should circle back on pricing" — soft language that keyword extraction misses.
+- **Meeting Intelligence** — `/meeting-prep` finds past discussions related to the meeting topic, not just meetings with the same people. `/process-meetings` catches implicit commitments like "we should circle back on pricing" — soft language that keyword extraction would miss.
 
 - **Search & People** — All vault searches become meaning-aware. Person lookup finds references by role ("the VP of Sales asked about..."), not just by name.
 
@@ -244,7 +244,7 @@ This is powered by [QMD](https://github.com/tobi/qmd), an open-source local sear
 
 **If you don't enable it,** nothing changes — everything continues to work with keyword matching, just as it always has.
 
-Part of our philosophy with Dex is to stay on top of the best open-source tools so you don't have to. When something like QMD comes along that genuinely makes the experience better, we integrate it — you run one command and your existing workflows get smarter.
+Part of the philosophy with Dex is to stay on top of the best open-source tools so you don't have to. When something like QMD comes along that genuinely makes the experience better, Dave integrates it — you run one command and your existing workflows get smarter.
 
 **Smart setup, not generic indexing.** When you run `/enable-semantic-search`, Dex scans your vault and recommends purpose-built search collections based on what you've actually built — people pages, meeting notes, projects, goals. Each collection gets semantic context that tells the search engine what the content IS, dramatically improving result relevance. Generic tools dump everything into one index. Dex gives your search engine a mental model of your information architecture.
 
@@ -569,7 +569,7 @@ Until now, daily and weekly planning showed you information — your tasks, cale
 
 Now Dex actively thinks ahead and surfaces things you might have missed.
 
-This is the biggest upgrade to Dex's intelligence since launch. Based on feedback from early users, we've rebuilt the planning skills to be proactive rather than passive. Dex now does the mental work of connecting your calendar to your tasks, tracking your commitments, and warning you when things are slipping — so you can focus on actually doing the work.
+This is the biggest upgrade to Dex's intelligence since launch. Based on feedback from early users, Dave rebuilt the planning skills to be proactive rather than passive. Dex now does the mental work of connecting your calendar to your tasks, tracking your commitments, and warning you when things are slipping — so you can focus on actually doing the work.
 
 ---
 
@@ -587,7 +587,7 @@ This is the biggest upgrade to Dex's intelligence since launch. Based on feedbac
 
 **Meeting Intelligence**
 
-**Before:** You'd see "Acme call" on your calendar and have to manually check: what's the status of that project? Any outstanding tasks? What did we discuss last time?
+**Before:** You'd see "Acme call" on your calendar and have to manually check: what's the status of that project? Any outstanding tasks? What did you discuss last time?
 
 **Now:** For each meeting, Dex automatically connects the dots:
 
