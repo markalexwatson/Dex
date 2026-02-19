@@ -92,6 +92,8 @@ If everything is fine? Complete silence. No "all systems go" noise.
 
 Previously, you had to remember to run `/dex-update` to check for new versions. Now Dex checks once a day automatically and lets you know if there's something new — a quiet one-liner at the end of your first chat, once per day. No nagging, no blocking. Run `/dex-update` when you're ready, or ignore it.
 
+**One catch:** You need to run `/dex-update` manually one time to get this feature. That update pulls in the automatic checking. From that point on, you'll be notified whenever something new is available — no more remembering to check.
+
 ---
 
 ## [1.9.0] - 2026-02-17
