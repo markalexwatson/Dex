@@ -38,23 +38,23 @@ The short version: Dex remembers things now. It gets smarter each day you use it
 
 ### 🙏 Community
 
-This is the first time Dex has received contributions from the community, and I'm genuinely humbled. Three people independently found things to improve, wrote the code, and shared it back. All four contributions are now live.
+This is the first time Dex has received contributions from the community, and I'm genuinely humbled. Three people independently found things to improve, built the fixes, and shared them back. All four contributions are now live.
 
-**@fonto — Calendar setup fix.** The `/calendar-setup` skill wasn't recognised as a command because the file was in the wrong folder structure. On top of that, the EventKit permission script was crashing when it tried to request calendar access — passing the wrong type to macOS. Both fixed. If you had trouble setting up your calendar before, try again now.
+**@fonto — Calendar setup now works.** Previously, running `/calendar-setup` didn't do anything — Dex couldn't find it. On top of that, when it tried to ask your Mac for permission to read your calendar, it would fail silently. Both issues are fixed. If you had trouble connecting your calendar before, try `/calendar-setup` again — it should just work now.
 
-**@fonto — Task ID uniqueness.** Task IDs use a counter (the `003` in `task-20260219-003`). That counter was resetting to 001 each day, which meant if you referenced tasks by their short number, you could get collisions between tasks created on different days. The counter is now globally unique across all dates.
+**@fonto — Tasks no longer get mixed up.** Every task in Dex gets a short reference number (like the `003` at the end of a task). Previously, that number could accidentally be the same for tasks created on different days — so when you said "mark 003 as done", Dex might match the wrong one. Now every task gets a number that's unique across your entire vault. No more mix-ups.
 
-**@acottrell — Google Calendar setup guide for Mac.** A clear, non-technical guide that answers the question every Mac user has: "How do I connect my Google Calendar to Dex?" The answer is simpler than you'd think — add Google to Apple's Calendar app, grant Cursor calendar access, done. Two steps. No API keys. This also improved the EventKit script to request permission on first use, so your calendar just works when you run `/daily-plan` for the first time. (And thank you for the kind words about the project.)
+**@acottrell — "How do I connect my Google Calendar?" answered.** If you use Google Calendar on a Mac, you probably wondered how to get your meetings into Dex. The answer turns out to be surprisingly simple — add your Google account to Apple's Calendar app (the one already on your Mac), then let Cursor access it. Two steps, no accounts to create, no passwords to enter anywhere. @acottrell wrote this up as a clear guide so nobody else has to figure it out from scratch. Even better — your calendar now asks for permission automatically the first time you need it, instead of requiring a separate setup step. (And thank you for the kind words about the project.)
 
-**@mekuhl — Apple Reminders integration.** This is the big one. You can now say **"Hey Siri, add to Dex Inbox: follow up with Sarah about pricing"** on your phone, and it flows into Dex. Here's how it works:
+**@mekuhl — Capture tasks from your phone with Siri.** This is the big one. You're in a meeting, someone asks you to do something, and you don't want to open your laptop. Now you can just say:
 
-- Siri creates a Reminder in a list called "Dex Inbox" (just a regular Reminders list on your phone)
-- Next time you run `/daily-plan`, Dex reads that list and surfaces your captures for triage
-- You assign a pillar and priority, it becomes a proper task, and the Reminder gets marked complete
+> **"Hey Siri, add to Dex Inbox: follow up with Sarah about pricing"**
 
-It works the other direction too. After your daily plan generates, your P0 and P1 focus tasks get pushed to a "Dex Today" Reminders list on your phone. You get native iOS notifications for your most important work. Complete a task on your phone? Dex picks up the completion during your evening review. Complete it in Dex? The Reminder clears automatically.
+That's it. Siri adds it to a Reminders list on your phone called "Dex Inbox." Next morning when you run `/daily-plan`, Dex finds it and asks you to triage it — assign a pillar, set the priority, and it becomes a proper task in your vault. The Reminder disappears from your phone automatically.
 
-No API keys, no cloud service, no new apps to install. Just Siri and Reminders — tools already on your phone — as the bridge to your vault.
+It works the other direction too. After your daily plan generates, your most important focus tasks appear on your phone as Reminders with notifications. So throughout the day, your phone reminds you about the things Dex thinks matter most. Complete something on your phone? Dex picks that up during your evening review. Complete it in Dex? The phone notification clears itself.
+
+Your phone and your vault stay in sync — without opening a laptop, without any new apps, without any setup beyond saying "Hey Siri" for the first time.
 
 If you've made improvements to your Dex setup that could help others, Dave would love to see them. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to share — no technical background required.
 
