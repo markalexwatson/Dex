@@ -877,9 +877,18 @@ def lookup_person_data(name: str, company: str = None) -> Dict[str, Any]:
         except (json.JSONDecodeError, OSError):
             pass
 
-    # If no index, fall back to scanning files directly
+    # Auto-rebuild if index is missing or stale (>24 hours old)
     if not index:
         index = build_people_index_data()
+    else:
+        built_at = index.get('built_at', '')
+        try:
+            built_dt = datetime.fromisoformat(built_at)
+            if (datetime.now() - built_dt) > timedelta(hours=24):
+                logger.info("People index is stale (>24h), rebuilding...")
+                index = build_people_index_data()
+        except (ValueError, TypeError):
+            index = build_people_index_data()
 
     people = index.get('people', [])
     name_lower = name.lower()
