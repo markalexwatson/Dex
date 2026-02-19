@@ -1,4 +1,4 @@
-# Dex — Your AI Chief of Staff
+# Dex by Dave — Your AI Chief of Staff
 
 **A personal operating system powered by Claude.**
 
@@ -920,7 +920,9 @@ Made an improvement to your Dex setup? Fixed something that was bugging you? Bui
 
 ## License
 
-MIT
+PolyForm Noncommercial 1.0.0.
+
+Commercial use is not allowed without a separate written commercial license from Dave Killeen. See `LICENSE` and `COMMERCIAL_LICENSE.md` for details.
 
 ---
 
